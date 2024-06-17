@@ -1,0 +1,26 @@
+[submodule "src/custom_gazebo_env"]
+	path = src/custom_gazebo_env
+	url = git@github.com:amefabris/custom_gazebo_env.git
+[submodule "src/common_msgs"]
+	path = src/common_msgs
+	url = git@github.com:amefabris/common_msgs.git
+[submodule "src/trac_ik"]
+	path = src/trac_ik
+	url = https://github.com/aprotyas/trac_ik.git
+	branch = ros2
+[submodule "src/Universal_Robots_ROS2_Description"]
+	path = src/Universal_Robots_ROS2_Description
+	url = https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git
+	branch = humble
+[submodule "src/ur_simulation_gazebo"]
+	path = src/ur_simulation_gazebo
+	url = https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git
+	branch = humble
+[submodule "src/differential_rendering"]
+	path = src/differential_rendering
+	url = git@github.com:amefabris/differential_rendering.git
+	branch = feat/ur10
+[submodule "src/ur_traj_publisher"]
+	path = src/ur_traj_publisher
+	url = git@github.com:amefabris/ur_traj_publisher.git
+	branch = feat/node_cpp
