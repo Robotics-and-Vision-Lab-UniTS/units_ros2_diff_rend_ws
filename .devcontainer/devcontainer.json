@@ -1,0 +1,16 @@
+{
+    "name": "humble_py3d_mx130",
+    "service": "humble_py3d_mx130",
+    "dockerComposeFile": "../docker/docker-compose.yaml",
+    "postStartCommand": "git config --global --add safe.directory '*'",
+    "extensions": [
+        "ms-iot.vscode-ros",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools-extension-pack",
+        "mhutchie.git-graph",
+        "ms-azuretools.vscode-docker",
+        "DotJoshJohnson.xml"
+    ],
+    "workspaceFolder": "/home/code",
+    "shutdownAction": "stopCompose"
+}
