@@ -90,4 +90,4 @@ RUN pip install pyrender numpy-stl tikzplotlib numpy-quaternion
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
-RUN echo 'export GAZEBO_MODEL_PATH=/home/code/src/custom_gazebo_env/objects/:$GAZEBO_MODEL_PATH' >> /root/.bashrc
+RUN echo 'export GAZEBO_MODEL_PATH=/home/code/src/custom_gazebo_env/:$GAZEBO_MODEL_PATH' >> /root/.bashrc
