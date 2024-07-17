@@ -1,6 +1,6 @@
 {
-    "name": "humble_py3d_mx130",
-    "service": "humble_py3d_mx130",
+    "name": "humble_py3d_2000ada",
+    "service": "humble_py3d_2000ada",
     "dockerComposeFile": "../docker/docker-compose.yaml",
     "postStartCommand": "git config --global --add safe.directory '*'",
     "extensions": [
