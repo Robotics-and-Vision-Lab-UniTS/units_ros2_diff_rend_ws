@@ -86,6 +86,10 @@ RUN  apt-get update \
 RUN pip install opencv-python
 RUN pip install pyrender numpy-stl tikzplotlib numpy-quaternion
 
+# Installation of SW for OAK D-POE
+RUN  apt-get update && \
+apt-get install -y iputils-ping ros-humble-depthai-ros\
+&& rm -rf /var/lib/apt/lists/*
 
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
