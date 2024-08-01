@@ -19,6 +19,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - $XAUTHORITY:/dot.Xauthority
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       # - /dev/bus/usb:/dev/bus/usb
       - type: bind

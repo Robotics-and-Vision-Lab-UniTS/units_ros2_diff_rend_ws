@@ -91,6 +91,13 @@ RUN  apt-get update && \
 apt-get install -y iputils-ping ros-humble-depthai-ros\
 && rm -rf /var/lib/apt/lists/*
 
+# Installation of Xauthority to allow gui visualization through docker using laptop's key
+RUN  apt-get update && apt upgrade -y \
+     && apt-get install -y xauth \
+     && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'xauth merge /dot.Xauthority' >> /root/.bashrc
+
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc

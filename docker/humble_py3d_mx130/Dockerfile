@@ -87,6 +87,13 @@ RUN  apt-get update \
 RUN pip install opencv-python
 RUN pip install pyrender numpy-stl tikzplotlib numpy-quaternion
 
+# Installation of Xauthority to allow gui visualization through docker using laptop's key
+RUN  apt-get update && apt upgrade -y \
+     && apt-get install -y xauth \
+     && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'xauth merge /dot.Xauthority' >> /root/.bashrc
+
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
