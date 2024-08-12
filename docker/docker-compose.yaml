@@ -1,8 +1,8 @@
 version: "3.8"
 services:
-  humble_py3d_mx130:
-    container_name: humble_py3d_mx130
-    image: humble_py3d_mx130
+  humble_py3d_2000ada:
+    container_name: humble_py3d_2000ada
+    image: humble_py3d_2000ada
     privileged: true
     network_mode: host
     stdin_open: true # docker run -i
@@ -19,6 +19,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - $XAUTHORITY:/dot.Xauthority
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       # - /dev/bus/usb:/dev/bus/usb
       - type: bind
@@ -26,7 +27,7 @@ services:
         target: /home/code
     build:
       context: .
-      dockerfile: ./humble_py3d_mx130/Dockerfile
+      dockerfile: ./humble_py3d_2000ada/Dockerfile
     command: /bin/sh -c "while sleep 1000; do :; done"
     deploy:
       resources:

@@ -5,7 +5,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Running container
 docker run -it --privileged --rm \
-               --name humble_py3d_mx130 \
+               --name humble_py3d_2000ada \
                --net=host \
                --gpus all \
                -e DISPLAY=$DISPLAY \
@@ -13,4 +13,4 @@ docker run -it --privileged --rm \
                -v $XAUTHORITY:/dot.Xauthority \
                -v $SCRIPT_DIR/../../units_ws:/home/code \
                -w /home/code \
-               humble_py3d_mx130 bash
+               humble_py3d_2000ada bash
