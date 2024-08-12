@@ -24,3 +24,6 @@
 	path = src/ur_traj_publisher
 	url = git@github.com:amefabris/ur_traj_publisher.git
 	branch = feat/node_cpp
+[submodule "src/Fairino_ROS2_Driver"]
+	path = src/Fairino_ROS2_Driver
+	url = git@github.com:amefabris/Fairino_ROS2_Driver.git
