@@ -27,3 +27,6 @@
 [submodule "src/Fairino_ROS2_Driver"]
 	path = src/Fairino_ROS2_Driver
 	url = git@github.com:amefabris/Fairino_ROS2_Driver.git
+[submodule "src/frcobot_ros2"]
+	path = src/frcobot_ros2
+	url = https://github.com/FAIR-INNOVATION/frcobot_ros2.git
