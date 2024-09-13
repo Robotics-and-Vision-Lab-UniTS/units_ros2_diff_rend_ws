@@ -90,6 +90,8 @@ RUN pip install pyrender numpy-stl tikzplotlib numpy-quaternion
 RUN  apt-get update && \
 apt-get install -y iputils-ping ros-humble-depthai-ros\
 && rm -rf /var/lib/apt/lists/*
+RUN pip install depthai
+
 
 # Installation of Xauthority to allow gui visualization through docker using laptop's key
 RUN  apt-get update && apt upgrade -y \
