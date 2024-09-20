@@ -114,6 +114,27 @@ RUN  apt-get update && apt upgrade -y \
      && apt-get install -y ros-humble-ros2-control \
      && rm -rf /var/lib/apt/lists/*
 
+# Install zed software
+
+RUN  apt-get update && apt upgrade -y \
+     && apt-get install -y zstd usbutils \
+     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /
+RUN wget -O ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run https://download.stereolabs.com/zedsdk/4.0/cu121/ubuntu22
+RUN sh ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run -- silent
+
+WORKDIR /home/code/src
+RUN git clone -b humble-v4.0.8 https://github.com/stereolabs/zed-ros2-wrapper.git
+RUN cd zed-ros2-wrapper && git submodule update --init --recursive
+WORKDIR /home/code
+
+RUN  apt-get update && apt upgrade -y \
+     && rosdep install --from-paths src --ignore-src -r -y \
+     && rm -rf /var/lib/apt/lists/*
+
+## RUN  /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.sh; colcon build"
+
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
