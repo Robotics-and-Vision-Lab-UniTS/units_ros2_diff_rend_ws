@@ -31,3 +31,6 @@
 	path = src/frcobot_ros2
 	url = git@github.com:amefabris/frcobot_ros2.git
 	branch = fix/working_repo
+[submodule "src/common_utils"]
+	path = src/common_utils
+	url = git@github.com:amefabris/common_utils.git
