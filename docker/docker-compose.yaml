@@ -21,7 +21,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $XAUTHORITY:/dot.Xauthority
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
-      # - /dev/bus/usb:/dev/bus/usb
+      - /dev/bus/usb:/dev/bus/usb
       - type: bind
         source: ../../units_ws
         target: /home/code
