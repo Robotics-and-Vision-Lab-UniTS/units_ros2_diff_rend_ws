@@ -73,13 +73,6 @@ RUN  apt-get update \
   libnlopt-dev libnlopt-cxx-dev \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/code/src
-WORKDIR /home/code/
-RUN git clone -b $ROS_DISTRO https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git src/ur_simulation_gazebo
-
-RUN  apt-get update \
-  && rosdep update && rosdep install --ignore-src --from-paths src -y \
-  && rm -rf /var/lib/apt/lists/*
 # # COPY ./ros_entrypoint.sh /
 # # RUN chmod +x /ros_entrypoint.sh
 
