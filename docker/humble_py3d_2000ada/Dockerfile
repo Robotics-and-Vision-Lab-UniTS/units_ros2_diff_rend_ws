@@ -69,7 +69,7 @@ RUN pip install 'git+https://github.com/facebookresearch/pytorch3d.git@stable'
 
 RUN  apt-get update \
   && apt-get install -y ros-humble-joint-state-publisher-gui \
-  ros-humble-ur ros-humble-gazebo-plugins \ 
+  ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gazebo-ros2-control ros-humble-gazebo-plugins \ 
   libnlopt-dev libnlopt-cxx-dev \
   && rm -rf /var/lib/apt/lists/*
 
