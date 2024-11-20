@@ -129,6 +129,9 @@ RUN  apt-get update && apt upgrade -y \
 ## RUN  /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.sh; colcon build"
 ENV PYTHONPATH="$PYTHONPATH:/home/code/src/common_utils"
 
+RUN pip install kornia 
+RUN pip uninstall numpy -y
+
 RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
 
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
