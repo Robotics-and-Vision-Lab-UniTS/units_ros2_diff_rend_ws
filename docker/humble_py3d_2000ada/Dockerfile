@@ -132,6 +132,12 @@ ENV PYTHONPATH="$PYTHONPATH:/home/code/src/common_utils"
 RUN pip install kornia 
 RUN pip uninstall numpy -y
 
+RUN apt-get update && apt upgrade -y \
+    && apt-get install -y python3-pcl pcl-tools
+
+RUN pip install numpy==1.26.4
+RUN pip install open3d
+
 RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
 
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
