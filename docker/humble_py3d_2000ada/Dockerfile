@@ -104,7 +104,7 @@ ENV LD_LIBRARY_PATH="/usr/lib/fairino:$LD_LIBRARY_PATH"
 RUN ldconfig
 
 RUN  apt-get update && apt upgrade -y \
-     && apt-get install -y ros-humble-ros2-control \
+     && apt-get install -y ros-humble-ign-ros2-control \
      && rm -rf /var/lib/apt/lists/*
 
 # Install zed software
