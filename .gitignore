@@ -38,3 +38,8 @@ build/*
 
 # Pictures
 *.png
+
+# caches
+.cache
+
+#bags

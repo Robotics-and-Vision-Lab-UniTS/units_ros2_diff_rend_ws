@@ -1,0 +1,95 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+
+    {
+        "label": "source_ros2",
+        "detail": "Source the ROS2 global workspace",
+        "type": "shell",
+        "command": "source /opt/ros/$ROS_DISTRO/setup.bash",
+        "problemMatcher": "$gcc"
+    },
+    {
+        "label": "source_ws",
+        "detail": "Source the local workspace",
+        "type": "shell",
+        "command": "source ${workspaceFolder}/install/setup.bash",
+        "problemMatcher": "$gcc",
+        "dependsOrder": "sequence",
+        "dependsOn": [
+            "source_ros2"
+        ]
+    },
+    {
+        "label": "colcon build debug",
+        "type": "shell",
+        "command": [
+            "colcon build",
+            "--symlink-install",
+            "--event-handlers console_cohesion+",
+            "--base-paths /home/code",
+            "--cmake-args -DCMAKE_BUILD_TYPE=Debug"
+        ],
+        "problemMatcher": [],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        },
+        "dependsOrder": "sequence",
+        "dependsOn": [
+            "source_ros2"
+        ]
+    },
+    {
+        "label": "colcon build debug pkg",                          // Name of the task
+        "type": "shell",                                   // Task type (e.g., shell command)
+        "command": [
+            "colcon build",
+            "--packages-select ${input:package}",
+            "--symlink-install",
+            "--event-handlers console_cohesion+",
+            "--base-paths /home/code",
+            "--cmake-args -DCMAKE_BUILD_TYPE=Debug;",
+            "source ${workspaceFolder}/install/setup.bash;"
+        ],
+        "problemMatcher": [],
+        "group": {
+          "kind": "build",
+          "isDefault": true                               // Makes this task the default
+        },
+        "dependsOrder": "sequence",
+        "dependsOn": [
+            "source_ros2"
+        ]
+    },
+    {
+        "label": "colcon clean",
+        "type": "shell",
+        "command": [
+            "cd ${workspaceFolder};",
+            "rm -rf build/ install/ log/;"
+        ]
+    },
+    {
+        "label": "colcon test",
+        "type": "shell",
+        "command": [
+            "cd project-workspace;",
+            "source /opt/ros/humble/setup.bash;",
+            "source install/setup.bash;",
+            "colcon test",
+            "--packages-select <package-name>",
+            "--event-handlers console_direct+;"
+        ]
+    },
+    
+],
+"inputs": [
+    {
+      "id": "package",
+      "type": "promptString",
+      "description": "Enter the name of the package to build",
+      "default": "my_package"
+    }
+  ]
+}
