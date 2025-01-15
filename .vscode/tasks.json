@@ -75,11 +75,14 @@
         "type": "shell",
         "command": [
             "cd project-workspace;",
-            "source /opt/ros/humble/setup.bash;",
-            "source install/setup.bash;",
             "colcon test",
             "--packages-select <package-name>",
             "--event-handlers console_direct+;"
+        ],
+        "dependsOrder": "sequence",
+        "dependsOn": [
+            "source_ros2",
+            "source_ws"
         ]
     },
     
