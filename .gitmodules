@@ -24,3 +24,9 @@
 	path = src/ur_traj_publisher
 	url = git@github.com:amefabris/ur_traj_publisher.git
 	branch = feat/node_cpp
+[submodule "src/common_utils"]
+	path = src/common_utils
+	url = git@github.com:amefabris/common_utils.git
+[submodule "src/depth_handler"]
+	path = src/depth_handler
+	url = git@github.com:amefabris/depth_handler.git

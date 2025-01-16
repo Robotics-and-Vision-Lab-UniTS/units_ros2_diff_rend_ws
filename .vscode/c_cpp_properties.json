@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "${default}",
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "includePath": [
+                "/opt/ros/humble/include/**",
+                "/home/code/src/Fairino_ROS2_Driver/fr_driver/hardware/include/**",
+                "/home/code/src/trac_ik/trac_ik_lib/include/**",
+                "/home/code/src/ur_traj_publisher/include/**",
+                "/home/code/src/depth_handler/ros2_cpp/include/**",
+                "/home/code/install/common_msgs/include/**",
+                "/usr/include/eigen3",
+                "/usr/include/opencv4",
+                "/usr/include/pcl-1.12"
+
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++14"
+        }
+    ],
+    "version": 4
+}

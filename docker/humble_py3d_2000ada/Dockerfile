@@ -69,17 +69,10 @@ RUN pip install 'git+https://github.com/facebookresearch/pytorch3d.git@stable'
 
 RUN  apt-get update \
   && apt-get install -y ros-humble-joint-state-publisher-gui \
-  ros-humble-ur ros-humble-gazebo-plugins \ 
+  ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gazebo-ros2-control ros-humble-gazebo-plugins \ 
   libnlopt-dev libnlopt-cxx-dev \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/code/src
-WORKDIR /home/code/
-RUN git clone -b $ROS_DISTRO https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git src/ur_simulation_gazebo
-
-RUN  apt-get update \
-  && rosdep update && rosdep install --ignore-src --from-paths src -y \
-  && rm -rf /var/lib/apt/lists/*
 # # COPY ./ros_entrypoint.sh /
 # # RUN chmod +x /ros_entrypoint.sh
 
@@ -90,6 +83,7 @@ RUN pip install pyrender numpy-stl tikzplotlib numpy-quaternion
 RUN  apt-get update && \
 apt-get install -y iputils-ping ros-humble-depthai-ros\
 && rm -rf /var/lib/apt/lists/*
+RUN pip install depthai
 
 # Installation of Xauthority to allow gui visualization through docker using laptop's key
 RUN  apt-get update && apt upgrade -y \
@@ -97,6 +91,48 @@ RUN  apt-get update && apt upgrade -y \
      && rm -rf /var/lib/apt/lists/*
 
 RUN echo 'xauth merge /dot.Xauthority' >> /root/.bashrc
+
+
+RUN  apt-get update && apt upgrade -y \
+     && apt-get install -y ros-humble-ign-ros2-control \
+     && rm -rf /var/lib/apt/lists/*
+
+# Install zed software
+RUN  apt-get update && apt upgrade -y \
+     && apt-get install -y zstd usbutils \
+     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /
+RUN wget -O ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run https://download.stereolabs.com/zedsdk/4.0/cu121/ubuntu22
+RUN sh ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run -- silent
+
+WORKDIR /home/code/src
+RUN git clone -b humble-v4.0.8 https://github.com/stereolabs/zed-ros2-wrapper.git
+RUN cd zed-ros2-wrapper && git submodule update --init --recursive
+WORKDIR /home/code
+
+RUN  apt-get update && apt upgrade -y \
+     && rosdep install --from-paths src --ignore-src -r -y \
+     && rm -rf /var/lib/apt/lists/*
+
+## RUN  /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.sh; colcon build"
+ENV PYTHONPATH="$PYTHONPATH:/home/code/src/common_utils"
+
+RUN pip install kornia 
+RUN pip uninstall numpy -y
+
+RUN apt-get update && apt upgrade -y \
+    && apt-get install -y python3-pcl pcl-tools
+
+RUN pip install numpy==1.26.4
+RUN pip install open3d
+
+# Install debugging packages
+RUN  apt-get update && apt upgrade -y \
+     && apt-get install -y gdb gdbserver\
+     && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
 
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
