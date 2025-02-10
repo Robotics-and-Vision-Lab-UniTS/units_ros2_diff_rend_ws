@@ -11,7 +11,7 @@ ENV FORCE_CUDA=1
 ENV PATH="$CUDA_HOME/bin:$PATH"
 ENV LD_LIBRARY_PATH="${CUDA_HOME}/lib64$LD_LIBRARY_PATH"
 # Set GPU architecture required to compile torch related libraries https://en.wikipedia.org/wiki/CUDA
-ENV TORCH_CUDA_ARCH_LIST=Ampere
+ENV TORCH_CUDA_ARCH_LIST="8.9"
 RUN pip install torch==2.3.1 torchvision==0.18.1
 RUN pip install -U fvcore
 RUN pip install -U iopath
@@ -88,7 +88,7 @@ RUN pip install depthai
 
 # Installation of Xauthority to allow gui visualization through docker using laptop's key
 RUN  apt-get update && apt upgrade -y \
-     && apt-get install -y xauth \
+     && apt-get install -y xauth unzip \
      && rm -rf /var/lib/apt/lists/*
 
 RUN echo 'xauth merge /dot.Xauthority' >> /root/.bashrc
@@ -113,20 +113,22 @@ RUN  apt-get update && apt upgrade -y \
      && apt-get install -y zstd usbutils \
      && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /
-RUN wget -O ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run https://download.stereolabs.com/zedsdk/4.0/cu121/ubuntu22
-RUN sh ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run -- silent
+# WORKDIR /
+# RUN wget -O ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run https://download.stereolabs.com/zedsdk/4.0/cu121/ubuntu22
+# RUN sh ZED_SDK_Ubuntu22_cuda12.1_v4.0.8.zstd.run -- silent
 
-WORKDIR /home/code/src
-RUN git clone -b humble-v4.0.8 https://github.com/stereolabs/zed-ros2-wrapper.git
-RUN cd zed-ros2-wrapper && git submodule update --init --recursive
-WORKDIR /home/code
+# WORKDIR /home/code/src
+# RUN git clone -b humble-v4.0.8 https://github.com/stereolabs/zed-ros2-wrapper.git
+# RUN cd zed-ros2-wrapper && git submodule update --init --recursive
+# WORKDIR /home/code
 
-RUN  apt-get update && apt upgrade -y \
-     && rosdep install --from-paths src --ignore-src -r -y \
-     && rm -rf /var/lib/apt/lists/*
+# RUN  apt-get update && apt upgrade -y \
+#      && rosdep update && rosdep install --from-paths src --ignore-src -r -y \
+#      && rm -rf /var/lib/apt/lists/*
 
 ## RUN  /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.sh; colcon build"
+# RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
+
 ENV PYTHONPATH="$PYTHONPATH:/home/code/src/common_utils"
 
 RUN pip install kornia 
@@ -143,9 +145,11 @@ RUN  apt-get update && apt upgrade -y \
      && apt-get install -y gdb gdbserver\
      && rm -rf /var/lib/apt/lists/*
 
-RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
+# Installing Ros middleware protocol zenoh
+RUN apt update && sudo apt install -y ros-$ROS_DISTRO-rmw-zenoh-cpp
 
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
 RUN echo 'export GAZEBO_MODEL_PATH=/home/code/src/custom_gazebo_env/:$GAZEBO_MODEL_PATH' >> /root/.bashrc
+RUN echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> /root/.bashrc

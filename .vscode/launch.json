@@ -25,6 +25,12 @@
             "preLaunchTask": "colcon build debug pkg",
             "target": "${workspaceFolder}/install/${input:package}/share/${input:package}/launch/${input:package}.launch.py",
         },
+        {
+            "name": "Python diff_renderer",
+            "type": "ros",
+            "request": "launch",
+            "target": "${workspaceFolder}/install/diff_renderer/share/diff_renderer/launch/diff_renderer.launch.py",
+        },
 
     ],
     "inputs": [
