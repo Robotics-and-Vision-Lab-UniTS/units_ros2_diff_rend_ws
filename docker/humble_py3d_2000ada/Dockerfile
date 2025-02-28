@@ -93,6 +93,22 @@ RUN  apt-get update && apt upgrade -y \
 
 RUN echo 'xauth merge /dot.Xauthority' >> /root/.bashrc
 
+# Create a non-root user
+ARG USERNAME=ros
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+  && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+  && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config
+
+# Set up sudo
+RUN apt-get update \
+  && apt-get install -y sudo \
+  && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
+  && chmod 0440 /etc/sudoers.d/$USERNAME \
+  && rm -rf /var/lib/apt/lists/*
+
 # Install FAIRINO C++ SDK
 WORKDIR /
 RUN git clone -b v2.1.3 https://github.com/FAIR-INNOVATION/fairino-cpp-sdk.git
@@ -103,6 +119,8 @@ RUN cp /fairino-cpp-sdk/linux/libfairino/include/libfairino/*.h /usr/include/fai
 ENV LD_LIBRARY_PATH="/usr/lib/fairino:$LD_LIBRARY_PATH"
 RUN ldconfig
 
+RUN sudo chown -R ${USERNAME}:${USERNAME} /usr/lib/fairino /usr/include/fairino
+
 RUN  apt-get update && apt upgrade -y \
      && apt-get install -y ros-humble-ign-ros2-control \
      && rm -rf /var/lib/apt/lists/*
@@ -110,7 +128,10 @@ RUN  apt-get update && apt upgrade -y \
 # Install zed software
 
 RUN  apt-get update && apt upgrade -y \
-     && apt-get install -y zstd usbutils \
+     && apt-get install -y \
+     zstd \
+     usbutils \
+     udev \
      && rm -rf /var/lib/apt/lists/*
 
 # WORKDIR /
@@ -127,29 +148,44 @@ RUN  apt-get update && apt upgrade -y \
 #      && rm -rf /var/lib/apt/lists/*
 
 ## RUN  /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.sh; colcon build"
-# RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
+
+RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | sudo tee /etc/udev/rules.d/80-movidius.rules
 
 ENV PYTHONPATH="$PYTHONPATH:/home/code/src/common_utils"
 
 RUN pip install kornia 
 RUN pip uninstall numpy -y
 
-RUN apt-get update && apt upgrade -y \
-    && apt-get install -y python3-pcl pcl-tools
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y \
+    python3-pcl \
+    pcl-tools \
+    && rm -rf /var/lib/apt/lists/*
+
 
 RUN pip install numpy==1.26.4
 RUN pip install open3d
 
 # Install debugging packages
 RUN  apt-get update && apt upgrade -y \
-     && apt-get install -y gdb gdbserver\
+     && apt-get install -y \
+     gdb \
+     gdbserver \
      && rm -rf /var/lib/apt/lists/*
 
 # Installing Ros middleware protocol zenoh
-RUN apt update && sudo apt install -y ros-$ROS_DISTRO-rmw-zenoh-cpp
+RUN apt-get update \
+    && sudo apt-get install -y \
+    ros-$ROS_DISTRO-rmw-zenoh-cpp \
+    ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
 RUN echo 'export GAZEBO_MODEL_PATH=/home/code/src/custom_gazebo_env/:$GAZEBO_MODEL_PATH' >> /root/.bashrc
 RUN echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> /root/.bashrc
+RUN echo 'export RMW_IMPLEMENTATION=rmw_zenoh_cpp' >> /root/.bashrc
+RUN touch /home/${USERNAME}/.bashrc \
+    && cp /root/.bashrc /home/${USERNAME}/.bashrc
