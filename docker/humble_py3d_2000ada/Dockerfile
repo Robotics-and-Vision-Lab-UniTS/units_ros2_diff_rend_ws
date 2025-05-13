@@ -109,22 +109,6 @@ RUN apt-get update \
   && chmod 0440 /etc/sudoers.d/$USERNAME \
   && rm -rf /var/lib/apt/lists/*
 
-# Install FAIRINO C++ SDK
-WORKDIR /
-RUN git clone -b v2.1.6-robot3.7.6 https://github.com/FAIR-INNOVATION/fairino-cpp-sdk.git
-RUN mkdir -p /usr/lib/fairino
-RUN mkdir -p /usr/include/fairino
-
-RUN unzip /fairino-cpp-sdk/linux/libfairino/lib/x86/*.zip -d /fairino-cpp-sdk/linux/libfairino/lib/x86/
-
-
-RUN cp /fairino-cpp-sdk/linux/libfairino/lib/x86/lib/* /usr/lib/fairino
-RUN cp /fairino-cpp-sdk/linux/libfairino/include/*.h /usr/include/fairino
-ENV LD_LIBRARY_PATH="/usr/lib/fairino:$LD_LIBRARY_PATH"
-RUN ldconfig
-
-RUN sudo chown -R ${USERNAME}:${USERNAME} /usr/lib/fairino /usr/include/fairino
-
 RUN  apt-get update && apt upgrade -y \
      && apt-get install -y ros-humble-ign-ros2-control \
      && rm -rf /var/lib/apt/lists/*
@@ -189,6 +173,7 @@ RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
 RUN echo 'export GAZEBO_MODEL_PATH=/home/code/src/custom_gazebo_env/:$GAZEBO_MODEL_PATH' >> /root/.bashrc
+RUN echo 'export GAZEBO_PLUGIN_PATH=/home/code/install/ros2_linkattacher/lib/:$GAZEBO_PLUGIN_PATH' >> /root/.bashrc
 RUN echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> /root/.bashrc
 RUN echo 'export RMW_IMPLEMENTATION=rmw_zenoh_cpp' >> /root/.bashrc
 RUN touch /home/${USERNAME}/.bashrc \

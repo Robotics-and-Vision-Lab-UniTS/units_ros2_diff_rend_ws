@@ -19,10 +19,6 @@
 [submodule "src/Fairino_ROS2_Driver"]
 	path = src/Fairino_ROS2_Driver
 	url = git@github.com:amefabris/Fairino_ROS2_Driver.git
-[submodule "src/frcobot_ros2"]
-	path = src/frcobot_ros2
-	url = git@github.com:amefabris/frcobot_ros2.git
-	branch = fix/working_repo
 [submodule "src/common_utils"]
 	path = src/common_utils
 	url = git@github.com:amefabris/common_utils.git
@@ -32,3 +28,6 @@
 [submodule "src/fr_gripper"]
 	path = src/fr_gripper
 	url = git@github.com:amefabris/fr_gripper.git
+[submodule "src/depthai_launcher"]
+	path = src/depthai_launcher
+	url = git@github.com:amefabris/depthai_launcher.git
