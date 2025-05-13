@@ -6,6 +6,7 @@
                 "limitSymbolsToIncludedHeaders": false
             },
             "includePath": [
+                "${workspaceFolder}/**",
                 "/opt/ros/humble/include/**",
                 "/home/code/src/Fairino_ROS2_Driver/fr_driver/hardware/include/**",
                 "/home/code/src/trac_ik/trac_ik_lib/include/**",
@@ -13,8 +14,8 @@
                 "/home/code/install/common_msgs/include/**",
                 "/usr/include/eigen3",
                 "/usr/include/opencv4",
-                "/usr/include/pcl-1.12"
-
+                "/usr/include/pcl-1.12",
+                "/usr/include/libfairino",
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",

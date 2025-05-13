@@ -111,11 +111,15 @@ RUN apt-get update \
 
 # Install FAIRINO C++ SDK
 WORKDIR /
-RUN git clone -b v2.1.3 https://github.com/FAIR-INNOVATION/fairino-cpp-sdk.git
+RUN git clone -b v2.1.6-robot3.7.6 https://github.com/FAIR-INNOVATION/fairino-cpp-sdk.git
 RUN mkdir -p /usr/lib/fairino
 RUN mkdir -p /usr/include/fairino
-RUN cp /fairino-cpp-sdk/linux/libfairino/lib/x86/* /usr/lib/fairino
-RUN cp /fairino-cpp-sdk/linux/libfairino/include/libfairino/*.h /usr/include/fairino
+
+RUN unzip /fairino-cpp-sdk/linux/libfairino/lib/x86/*.zip -d /fairino-cpp-sdk/linux/libfairino/lib/x86/
+
+
+RUN cp /fairino-cpp-sdk/linux/libfairino/lib/x86/lib/* /usr/lib/fairino
+RUN cp /fairino-cpp-sdk/linux/libfairino/include/*.h /usr/include/fairino
 ENV LD_LIBRARY_PATH="/usr/lib/fairino:$LD_LIBRARY_PATH"
 RUN ldconfig
 

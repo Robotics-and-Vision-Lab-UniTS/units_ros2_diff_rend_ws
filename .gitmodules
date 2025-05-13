@@ -29,3 +29,6 @@
 [submodule "src/depth_handler"]
 	path = src/depth_handler
 	url = git@github.com:amefabris/depth_handler.git
+[submodule "src/fr_gripper"]
+	path = src/fr_gripper
+	url = git@github.com:amefabris/fr_gripper.git
