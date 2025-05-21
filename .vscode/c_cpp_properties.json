@@ -15,7 +15,7 @@
                 "/usr/include/eigen3",
                 "/usr/include/opencv4",
                 "/usr/include/pcl-1.12",
-                "/usr/include/libfairino",
+                "${workspaceFolder}/src/fr_gripper/fr_gripper_ros2_driver/include"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",

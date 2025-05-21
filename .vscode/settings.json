@@ -13,7 +13,8 @@
         "/home/code/install/diff_renderer/lib/python3.10/site-packages",
         "/home/code/install/common_msgs/local/lib/python3.10/dist-packages",
         "/opt/ros/humble/lib/python3.10/site-packages",
-        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "./src/differential_rendering/python_scripts"
     ],
     "files.associations": {
         "chrono": "cpp",
@@ -93,9 +94,30 @@
         "variant": "cpp",
         "core": "cpp",
         "system_error": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "*.ipp": "cpp",
+        "csetjmp": "cpp",
+        "barrier": "cpp",
+        "charconv": "cpp",
+        "coroutine": "cpp",
+        "cuchar": "cpp",
+        "netfwd": "cpp",
+        "source_location": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "rope": "cpp",
+        "slist": "cpp",
+        "latch": "cpp",
+        "ranges": "cpp",
+        "scoped_allocator": "cpp",
+        "span": "cpp",
+        "syncstream": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/gcc",
     "C_Cpp.loggingLevel": "Debug",
     "C_Cpp.intelliSenseEngine": "default",
+    "cmake.sourceDirectory": "/home/code/src/frcobot_ros2/fairino30_v6_moveit2_config",
+    "urdf-visualizer.packages": {
+        "custom_gazebo_env": "/home/code/src/custom_gazebo_env"
+    },
 }

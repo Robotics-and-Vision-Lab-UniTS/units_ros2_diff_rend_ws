@@ -169,6 +169,13 @@ RUN apt-get update \
     ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     && rm -rf /var/lib/apt/lists/*
 
+RUN sudo pip uninstall opencv-python -y && \
+sudo pip install opencv-python-headless
+
+RUN  apt-get update && apt upgrade -y \
+     && rm -rf /var/lib/apt/lists/*
+
+
 RUN echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> /root/.bashrc
 RUN echo 'source /home/code/install/local_setup.bash' >> /root/.bashrc
 RUN echo 'source /usr/share/gazebo-11/setup.bash' >> /root/.bashrc
