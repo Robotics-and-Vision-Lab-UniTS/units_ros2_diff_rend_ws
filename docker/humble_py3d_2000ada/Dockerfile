@@ -170,9 +170,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sudo pip uninstall opencv-python -y && \
-sudo pip install opencv-python-headless
+sudo pip install opencv-python-headless && \
+pip install rosbags
 
 RUN  apt-get update && apt upgrade -y \
+     && sudo apt-get install -y \
+     ffmpeg \
      && rm -rf /var/lib/apt/lists/*
 
 
