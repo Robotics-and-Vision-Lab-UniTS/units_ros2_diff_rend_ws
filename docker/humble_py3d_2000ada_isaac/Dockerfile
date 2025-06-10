@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/isaac-sim:4.2.0
+FROM nvcr.io/nvidia/isaac-sim:4.5.0
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -14,6 +14,8 @@ RUN  apt-get update && apt upgrade -y \
   libxrender-dev \
   python3-pip \
   && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y --allow-downgrades libbrotli1=1.0.9-2build6
 
 # Install ros2 humble
 RUN apt -y -qq update && apt -y -qq install software-properties-common mesa-utils libglu1-mesa-dev\
