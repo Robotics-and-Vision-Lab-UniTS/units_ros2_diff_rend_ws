@@ -2,6 +2,16 @@
 Workspace containing all the modules of the projects at units
 
 ## Docker
+The container in this repository is crucial to develop in this workspace, and are designed to work in the VSCode IDE. So far they have been tested on the following machines:
+* DELL Precision 5490 (GPU 2000 ADA);
+* DELL Inspiron 15 7000 (GPU MX130).
+
+Since the programs inside this image will require access to GPU, the Dockerfile might need a little tweak.  
+So far the main repo of this branch is `fr10`. It contains all the submodules needed to do *pick and place* operations, *differentiable rendering for visual servoing* and many more things. However, each submodule can be used also independetly depending on the project at hans. Therefore feel free to checkout to a new branch and good luck with your project!
+
+:warning: **WARNING** :warning:  
+The docker image is quite heavy (30 to 40ish GB) because it's not optimized at all, and is thought to be something with very wide development scope in mind.
+
 ### Your PC setup
 To leverage NVIDIA GPU, remember to:
 * install `nvidia-container-toolkit`
