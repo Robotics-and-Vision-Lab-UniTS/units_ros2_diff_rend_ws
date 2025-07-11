@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  humble_py3d_quadro_p2200:
+    container_name: humble_py3d_quadro_p2200
+    image: humble_py3d_quadro_p2200
+    privileged: true
+    user: root
+    network_mode: host
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    runtime: nvidia
+    environment:
+      - DISPLAY=host.docker.internal:0.0
+      - QT_X11_NO_MITSHM=1
+#      - QT_OPENGL=software   # ← this is key!
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVI=1
+#      - LIBGL_ALWAYS_SOFTWARE=1
+#      - LIBGL_ALWAYS_INDIRECT=1
+#      - XDG_RUNTIME_DIR=/tmp/runtime-ros
+#      - GALLIUM_DRIVER=softpipe
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+#      - /tmp/.X11-unix:/tmp/.X11-unix
+#      - $HOME/.Xauthority:/dot.Xauthority
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/snd:/dev/snd:ro
+      - type: bind
+        source: ../../units_ws
+        target: /home/code
+#    build:
+#      context: .
+#      dockerfile: ./humble_py3d_quadro_p2200/Dockerfile
+#      args:
+#        USERNAME: ros
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
