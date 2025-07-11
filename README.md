@@ -1,6 +1,11 @@
 # units_ws
 Workspace containing all the modules of the projects at units
 
+## Ros2 RMW
+The rmw is the middleware used by ros to communicate over the network. In the docker container used, during testing `rmw_zenoh_cpp` was used because of its [better perfomance](https://discourse.ros.org/t/zenoh-performance/30494). In this case though, differently from the other middlewares you MUST remember to run the router before running any other node, this router will be responsible for managing the communication among different nodes. To launch the router open a separate shell and run:
+```
+ros2 run rmw_zenoh_cpp rmw_zenohd 
+```
 ## Docker
 The container in this repository is crucial to develop in this workspace, and are designed to work in the VSCode IDE. So far they have been tested on the following machines:
 * DELL Precision 5490 (GPU 2000 ADA);
