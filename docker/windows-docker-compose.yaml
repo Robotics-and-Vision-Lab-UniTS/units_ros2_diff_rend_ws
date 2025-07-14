@@ -10,7 +10,7 @@ services:
     tty: true # docker run -t
     runtime: nvidia
     environment:
-      - DISPLAY=host.docker.internal:0.0
+      - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1
 #      - QT_OPENGL=software   # ← this is key!
       - NVIDIA_VISIBLE_DEVICES=all
@@ -23,8 +23,8 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-#      - /tmp/.X11-unix:/tmp/.X11-unix
-#      - $HOME/.Xauthority:/dot.Xauthority
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority:rw \
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       - /dev/bus/usb:/dev/bus/usb
       - /dev/snd:/dev/snd:ro

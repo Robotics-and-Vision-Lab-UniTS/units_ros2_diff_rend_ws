@@ -171,7 +171,7 @@ RUN apt-get update \
 
 RUN sudo pip uninstall opencv-python -y && \
 sudo pip install opencv-python-headless && \
-pip install rosbags
+pip install rosbags && pip install scipy --upgrade
 
 RUN  apt-get update && apt upgrade -y \
      && sudo apt-get install -y \
