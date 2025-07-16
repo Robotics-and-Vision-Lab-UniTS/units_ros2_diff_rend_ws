@@ -1,8 +1,8 @@
 version: "3.8"
 services:
-  humble_py3d_2000ada:
-    container_name: humble_py3d_2000ada
-    image: humble_py3d_2000ada
+  humble_py3d_quadro_p2200:
+    container_name: humble_py3d_quadro_p2200
+    image: humble_py3d_quadro_p2200
     privileged: true
     user: ros
     network_mode: host
@@ -24,11 +24,11 @@ services:
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       - /dev/bus/usb:/dev/bus/usb
       - type: bind
-        source: ../../units_ws
+        source: ../../units_ros2_diff_rend_ws
         target: /home/code
     build:
       context: .
-      dockerfile: ./humble_py3d_2000ada/Dockerfile
+      dockerfile: ./humble_py3d_quadro_p2200/Dockerfile
       args:
         USERNAME: ros
     command: /bin/sh -c "while sleep 1000; do :; done"

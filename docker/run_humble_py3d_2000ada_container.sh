@@ -11,6 +11,6 @@ docker run -it --privileged --rm \
                -e DISPLAY=$DISPLAY \
                -v /tmp/.X11-unix:/tmp/.X11-unix \
                -v $XAUTHORITY:/dot.Xauthority \
-               -v $SCRIPT_DIR/../../units_ws:/home/code \
+               -v $SCRIPT_DIR/../../units_ros2_diff_rend_ws:/home/code \
                -w /home/code \
                humble_py3d_2000ada bash

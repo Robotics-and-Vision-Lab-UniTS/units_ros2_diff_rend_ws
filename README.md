@@ -1,5 +1,5 @@
-# units_ws
-Workspace containing all the modules of the projects at units
+# /units_ros2_diff_rend_ws
+Workspace containing all the modules of the projects at units for the differentiable rendering pipeline, how to launch the different nodes check [the respective repo](https://github.com/Robotics-and-Vision-Lab-UniTS/differential_rendering).
 
 ## Ros2 RMW
 The rmw is the middleware used by ros to communicate over the network. In the docker container used, during testing `rmw_zenoh_cpp` was used because of its [better perfomance](https://discourse.ros.org/t/zenoh-performance/30494). In this case though, differently from the other middlewares you MUST remember to run the router before running any other node, this router will be responsible for managing the communication among different nodes. To launch the router open a separate shell and run:

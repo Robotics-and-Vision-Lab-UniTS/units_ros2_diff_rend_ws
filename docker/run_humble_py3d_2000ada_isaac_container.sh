@@ -16,7 +16,7 @@ docker run -it --privileged --rm \
                -e XDG_RUNTIME_DIR=/run/user/$(id -u) \
                -v /tmp/.X11-unix:/tmp/.X11-unix \
                -v $XAUTHORITY:/root/.Xauthority \
-               -v $SCRIPT_DIR/../../units_ws:/home/code \
+               -v $SCRIPT_DIR/../../units_ros2_diff_rend_ws:/home/code \
                -w /home/code \
                --entrypoint /bin/bash \
                humble_py3d_2000ada_isaac

@@ -12,7 +12,7 @@ ENV PATH="$CUDA_HOME/bin:$PATH"
 ENV LD_LIBRARY_PATH="${CUDA_HOME}/lib64$LD_LIBRARY_PATH"
 # Set GPU architecture required to compile torch related libraries https://en.wikipedia.org/wiki/CUDA
 ENV TORCH_CUDA_ARCH_LIST="6.1"
-RUN pip install torch==2.3.1 torchvision==0.18.1
+RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 RUN pip install -U fvcore
 RUN pip install -U iopath
 
@@ -73,10 +73,13 @@ RUN  apt-get update \
   libnlopt-dev libnlopt-cxx-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# # COPY ./ros_entrypoint.sh /
+# # COPY ./ros_entrypoint.sh /  
 # # RUN chmod +x /ros_entrypoint.sh
 
-RUN pip install opencv-python
+RUN apt-get update && apt-get install -y \
+    python3-opencv \
+    libopencv-dev \
+ && rm -rf /var/lib/apt/lists/*
 RUN pip install pyrender numpy-stl tikzplotlib numpy-quaternion
 
 # Installation of SW for OAK D-POE
@@ -169,9 +172,9 @@ RUN apt-get update \
     ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     && rm -rf /var/lib/apt/lists/*
 
-RUN sudo pip uninstall opencv-python -y && \
-sudo pip install opencv-python-headless && \
-pip install rosbags && pip install scipy --upgrade
+# RUN sudo pip uninstall opencv-python -y && \
+# sudo pip install opencv-python-headless && \
+RUN pip install rosbags && pip install scipy --upgrade
 
 RUN  apt-get update && apt upgrade -y \
      && sudo apt-get install -y \

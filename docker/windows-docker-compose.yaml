@@ -29,7 +29,7 @@ services:
       - /dev/bus/usb:/dev/bus/usb
       - /dev/snd:/dev/snd:ro
       - type: bind
-        source: ../../units_ws
+        source: ../../units_ros2_diff_rend_ws
         target: /home/code
 #    build:
 #      context: .
